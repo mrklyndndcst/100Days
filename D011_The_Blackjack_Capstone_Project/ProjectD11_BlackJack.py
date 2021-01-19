@@ -1,23 +1,24 @@
-#convert A and jack to king to integers then sum
-
+#done first 2 cards of the player
+#done convert A and jack to king to integers then sum
+#make a lost print if exceeded to 21 for player
+#add dealer show first card
 
 import random
 
-deck = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",]
+deck = [
+    "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
+    "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
+    "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
+    "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
+    ]
 
-player_total = 0
-player_card = []
-player_pick = 2
+player_card = []    #card on hand of the player
+player_pick = 2     #card to pick of the player
 while player_pick != 0:
     
     card = random.randint(0,len(deck)-1)
 
     player = deck[card]
-
-    # if player == "A":
-    #     player = "1 or 11"
-    # elif player == "J" or player == "Q" or player == "K":
-    #     player = int(10)
 
     del deck[card]
 
@@ -26,11 +27,25 @@ while player_pick != 0:
     player_card.append(player)
 
     if player_pick == 0:
-        print(f"Your have {player_card} total of {sum(player_card)}")
+        player_total = 0
+        for to_add in player_card:
+            if to_add != "A":
+                if to_add != "J":
+                    if to_add != "Q":
+                        if to_add != "K":
+                            player_total += int(to_add)
+            if to_add == "J" or to_add == "Q" or to_add == "K" :
+                player_total += 10
+            if to_add == "A":
+                if player_total + 11 > 21:
+                    player_total += 1
+                elif player_total + 11 < 21:
+                    player_total += 11
+                    
+        print(f"You have {player_card} total of {player_total}")
         hit = input("Add card? enter 'y' for yes and 'n' for no: ")
         if hit == "y":
             player_pick += 1
-#test
 
 
 
