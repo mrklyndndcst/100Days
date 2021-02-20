@@ -1,29 +1,38 @@
 #done first 2 cards of the player
 #done convert A and jack to king to integers then sum
-#make a lost print if exceeded to 21 for player
+#done make a lost print if exceeded to 21 for player
 #add dealer show first card
-
+#
 import random
-
+import time
 deck = [
     "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
     "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
     "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
     "A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K",
-    ]
+   ]
 
+dealer_card = []    #card on hand of the dealer
+dealer_total = 0
 player_card = []    #card on hand of the player
 player_pick = 2     #card to pick of the player
+
 while player_pick != 0:
-    
+
+    if player_pick == 2:
+        card = random.randint(0,len(deck)-1)
+        dealer = deck[card]
+        print(f"Dealer picked {dealer}")
+        del deck[card]
+        dealer_card.append(dealer)
+
+    time.sleep(1)
+
     card = random.randint(0,len(deck)-1)
-
     player = deck[card]
-
+    print(f"Player picked {player}")
     del deck[card]
-
     player_pick -= 1
-
     player_card.append(player)
 
     if player_pick == 0:
@@ -36,22 +45,96 @@ while player_pick != 0:
                             player_total += int(to_add)
             if to_add == "J" or to_add == "Q" or to_add == "K" :
                 player_total += 10
-            if to_add == "A":
+        for add_a in player_card:        
+            if add_a == "A":
                 if player_total + 11 > 21:
                     player_total += 1
-                elif player_total + 11 < 21:
+                elif player_total + 11 <= 21:
                     player_total += 11
-                    
-        print(f"You have {player_card} total of {player_total}")
-        hit = input("Add card? enter 'y' for yes and 'n' for no: ")
-        if hit == "y":
-            player_pick += 1
+    time.sleep(1)
+    if player_pick == 0:
+        if player_total > 21:
+            print(f"The Player have {player_total} BUSTS")
+            print("Dealer Wins!!!")
+        elif player_total == 21 and len(player_card) == 2 and int in dealer_card and dealer_card != 10:
+            print(f"You have {player_card} BLACKJACK")
+            print("Player Wins!!!")
+        elif player_total == 21 and len(player_card) == 2 and str in dealer_card and dealer_card == 10:
+            
+            card = random.randint(0,len(deck)-1)
+            dealer = deck[card]
+            print(f"Dealer picked {dealer}")
+            del deck[card]
+            dealer_card.append(dealer)    
 
+            for to_add in dealer_card:
+                if to_add != "A":
+                    if to_add != "J":
+                        if to_add != "Q":
+                            if to_add != "K":
+                                dealer_total += int(to_add)
+                if to_add == "J" or to_add == "Q" or to_add == "K" :
+                    dealer_total += 10
+            for add_a in dealer_card:        
+                if add_a == "A":
+                    if dealer_total + 11 > 21:
+                        dealer_total += 1
+                    elif dealer_total + 11 <= 21:
+                        dealer_total += 11
 
+            if dealer_total == 21:
+                print("The Player and The dealer each have Blackjack the result is a PUSH.")
+            else:
+                print(f"Player have {player_card} BLACKJACK")
+                print("Player Wins!!!")
+        elif player_total <= 21:
+            print(f"Player have {player_card} total of {player_total}")
+            hit = input("type 'hit' for HIT and 'stand' for STAND: ")
+            if hit == "hit":
+                player_pick += 1
+            else:
+                
+                while dealer_total < 17:
 
+                    time.sleep(1)
 
+                    card = random.randint(0,len(deck)-1)
+                    dealer = deck[card]
+                    print(f"Dealer picked {dealer}")
+                    del deck[card]
+                    dealer_card.append(dealer)    
 
+                    dealer_total = 0
 
+                    for to_add in dealer_card:
+                        if to_add != "A":
+                            if to_add != "J":
+                                if to_add != "Q":
+                                    if to_add != "K":
+                                        dealer_total += int(to_add)
+                        if to_add == "J" or to_add == "Q" or to_add == "K" :
+                            dealer_total += 10
+                    for add_a in dealer_card:        
+                        if add_a == "A":
+                            if dealer_total + 11 > 21:
+                                dealer_total += 1
+                            elif dealer_total + 11 <= 21:
+                                dealer_total += 11  
+                if dealer_total > 21:
+                    print(f"The Dealer have {dealer_total} BUSTS")
+                    print("Player Wins!!!")
+                elif dealer_total > player_total:
+                    print(f"Player have lower hand {player_card} total of {player_total}")
+                    print(f"Dealer have higher hand {dealer_card} total of {dealer_total}")
+                    print("Dealer Wins!!!")
+                elif dealer_total < player_total:
+                    print(f"Dealer have higher hand {dealer_card} total of {dealer_total}")
+                    print(f"Player have lower hand {player_card} total of {player_total}")
+                    print("Player Wins!!!")
+                else:
+                    print(f"Player have {player_card} total of {player_total}")
+                    print(f"Dealer have {dealer_card} total of {dealer_total}")
+                    print("The Player and The dealer have same value NO ONE WINS.")
 
 
 
