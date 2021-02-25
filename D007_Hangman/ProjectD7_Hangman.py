@@ -16,8 +16,6 @@ print(f"The Chosen word is \n {display}")
 check = list(chosen_word)
 life = 5
 while check != display and life != 0:
-
-
   
   guess = input("Choose any letter. ")
   guess = guess.lower()
