@@ -38,8 +38,10 @@ while machine:
         print(f"Milk: {resources['milk']}ml")
         print(f"Coffee: {resources['coffee']}g")
         print(f"Money: ${money}")
-    else:
+    elif choice == 'latte' or choice == 'espresso' or choice == 'cappuccino':
         drink = MENU[choice]
         if check_ingredients(drink['ingredients']):
             if check_payment():
                 money += drink['cost']
+    else:
+        print(f"We only serve espresso ($1.5), latte ($2.5), cappuccino ($3) here.")
