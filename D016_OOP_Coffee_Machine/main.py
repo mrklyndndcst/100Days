@@ -16,7 +16,10 @@ while machine:
         money_machine.report()
     elif choices == 'latte' or choices == 'espresso' or choices == 'cappuccino':
         drink = menu.find_drink(choices)
-        if coffee_maker.is_resource_sufficient(drink) and money_machine.make_payment(drink.cost):
-            coffee_maker.make_coffee(drink)
+        check_resources = coffee_maker.is_resource_sufficient(drink)        
+        if check_resources:
+            check_payment = money_machine.make_payment(drink.cost)
+            if check_payment:
+                coffee_maker.make_coffee(drink)
     else:
         print(f"We only serve {menu.get_items()} here.")
